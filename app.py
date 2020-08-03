@@ -1,6 +1,6 @@
 import peeweedbevolve
-from flask import Flask, render_template, request
-from models import db
+from flask import Flask, render_template, request, redirect, url_for
+from models import db, Store
 
 app = Flask(__name__)
 
@@ -23,10 +23,17 @@ def index():
 
 @app.route("/store")
 def store():
-    store_name = request.args.get('store_name')
-    if store_name:
-        return render_template('store.html', store_name=store_name)
+    return render_template('store.html')
+
+@app.route("/store/new", methods=['POST'])
+def store_create():    
+    name = request.form.get('store_name')
+    store = Store(name=name)
+    if store.save():
+        print("Successfully saved")
+        return redirect(url_for('store'))
     else:
+        print("Something went wrong... Try again!")
         return render_template('store.html')
 
 
