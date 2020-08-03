@@ -21,5 +21,15 @@ def migrate():
 def index():
    return render_template('index.html')
 
+@app.route("/store")
+def store():
+    store_name = request.args.get('store_name')
+    if store_name:
+        return render_template('store.html', store_name=store_name)
+    else:
+        return render_template('store.html')
+
+
+
 if __name__ == '__main__':
    app.run()
