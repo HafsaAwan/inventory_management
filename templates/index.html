@@ -2,7 +2,8 @@
 
 {% block content %}
 <h2>Inventory Management Homepage</h2>
-
+<br/>
 <a href="{{ url_for('store') }}" class="btn btn-info">Add a store</a>
 <a href="{{ url_for('warehouse') }}" class="btn btn-info">Add a warehouse</a>
+<a href="{{ url_for('store_show') }}" class="btn btn-info">Check the list of stores</a>
 {% endblock %}

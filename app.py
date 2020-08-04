@@ -36,6 +36,12 @@ def store_create():
         print("Something went wrong... Try again!")
         return render_template('store.html')
 
+# show all stores 
+@app.route("/store/show", methods=['GET'])
+def store_show():
+    store_list = Store.select()
+    return render_template('store_show.html', store_list = store_list)
+
 @app.route("/warehouse")
 def warehouse():
     all_stores = Store.select()
