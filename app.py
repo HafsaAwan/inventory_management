@@ -1,6 +1,6 @@
 import peeweedbevolve
 from flask import Flask, render_template, request, redirect, url_for
-from models import db, Store
+from models import db, Store, Warehouse
 
 app = Flask(__name__)
 
@@ -36,7 +36,21 @@ def store_create():
         print("Something went wrong... Try again!")
         return render_template('store.html')
 
+@app.route("/warehouse")
+def warehouse():
+    all_stores = Store.select()
+    return render_template('warehouse.html', all_stores=all_stores)
 
+@app.route("/warehouse/new", methods=['POST'])
+def warehouse_create():    
+    store = request.form.get('store')
+    w = Warehouse(location = request.form['location'], store=store)
+    if w.save():
+        print("Successfully saved")
+        return redirect(url_for('warehouse'))
+    else:
+        print("Something went wrong... Try again!")
+        return render_template('warehouse.html')
 
 if __name__ == '__main__':
    app.run()
